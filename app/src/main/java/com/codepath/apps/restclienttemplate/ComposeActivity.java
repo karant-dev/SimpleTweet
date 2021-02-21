@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
@@ -84,7 +86,11 @@ public class ComposeActivity extends AppCompatActivity {
                         Log.i(TAG, "onSuccess for Publish Tweet");
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
-                            Log.i(TAG, "Published tweet: " + tweet);
+                            Log.i(TAG, "Published tweet: " + tweet.body);
+                            Intent intent = new Intent();
+                            intent.putExtra("tweet", Parcels.wrap(tweet));
+                            setResult(RESULT_OK, intent);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
